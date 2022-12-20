@@ -56,9 +56,10 @@ void UNO_velocidad_step(void)
   pulsos = UNO_velocidad_U.PPMICRO;
   interrupts();
   long currT = micros();
-  float deltaT = ((float)(currT - prevT)) / 1.0e6;
+  float deltaT = (float)(currT - prevT);
+  float speed = (pulsos - pulsos_prev) / deltaT;
 
-  UNO_velocidad_Y.VELOCIDAD = (pulsos - pulsos_prev) / deltaT / 374.0 * 60.0 * 0.001 +
+  UNO_velocidad_Y.VELOCIDAD = speed * 1.0E6 / 374.0 * 60.0 * 0.001 +
                               0.999 * UNO_velocidad_Y.VELOCIDAD;
 
   prevT = currT;
